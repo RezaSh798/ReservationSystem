@@ -1,3 +1,4 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Reservation.Infrastructure.Messaging;
 using Reservation.Infrastructure.Persistence;
@@ -9,14 +10,17 @@ builder.Services.AddDbContext<ReservationDbContext>(options =>
 
 builder.Services.Configure<RabbitMQSettings>(builder.Configuration.GetSection("RabbitMQ"));
 
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
-
-app.UseHttpsRedirection();
-
+app.UseSwagger();
+app.UseSwaggerUI();
+app.UseAuthorization();
 app.Run();

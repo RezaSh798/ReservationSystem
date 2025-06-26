@@ -17,7 +17,8 @@ public class RemoveReservationCommandHandler
     public async Task<Guid> Handle(RemoveReservationCommand request, CancellationToken cancellationToken)
     {
         ReservationEntity? reservation = await _context.Reservations.FindAsync(request.Id);
-        if (reservation == null) return null;
+        // TODO: Need throw exception
+        if (reservation == null) return request.Id;
 
         _context.Reservations.Remove(reservation);
         await _context.SaveChangesAsync();
