@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
+using Reservation.Infrastructure.Messaging;
 using Reservation.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
 builder.Services.AddDbContext<ReservationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ReservationDatabase")));
+
+builder.Services.Configure<RabbitMQSettings>(builder.Configuration.GetSection("RabbitMQ"));
 
 var app = builder.Build();
 
