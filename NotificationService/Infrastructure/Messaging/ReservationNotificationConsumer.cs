@@ -5,6 +5,7 @@ using Notification.Infrastructure.Persistence;
 using NotificationService.Application.Services;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using Reservation.Contracts.Events;
 
 namespace Notification.Infrastructure.Messaging;
 

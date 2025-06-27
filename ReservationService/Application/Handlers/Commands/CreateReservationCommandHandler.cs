@@ -5,6 +5,7 @@ using RabbitMQ.Client;
 using ReservationService.Application.Commands;
 using ReservationService.Domain.Entities;
 using ReservationService.Infrastructure.Persistence;
+using Reservation.Contracts.Events;
 
 namespace ReservationService.Application.Handlers.Commands;
 
@@ -32,20 +33,20 @@ public class CreateReservationCommandHandler(ReservationDbContext context) : IRe
             arguments: null
         );
 
-        var json = JsonSerializer.Serialize(new ReservationCreateEvent
+        var json = JsonSerializer.Serialize(new ReservationCreatedEvent
         {
-            ReservationId = ReservationService.Id,
-            Name = ReservationService.Name,
-            Email = ReservationService.Email,
-            ReservationDate = ReservationService.ReservationDate
+            ReservationId = reservation.Id,
+            Name = reservation.Name,
+            Email = reservation.Email,
+            ReservationDate = reservation.ReservationDate
         });
 
         var body = Encoding.UTF8.GetBytes(json);
 
-        channel.BasicPublishAsync(
+        await channel.BasicPublishAsync(
             exchange: "",
             routingKey: "reservation-created",
-            basicProperties: null,
+            // basicProperties: null,
             body: body
         );
 

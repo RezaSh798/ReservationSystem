@@ -5,6 +5,7 @@ using RabbitMQ.Client;
 using ReservationService.Application.Commands;
 using ReservationService.Domain.Entities;
 using ReservationService.Infrastructure.Persistence;
+using Reservation.Contracts.Events;
 
 namespace ReservationService.Application.Handlers.Commands;
 
@@ -36,14 +37,14 @@ public class RemoveReservationCommandHandler
         );
         var json = JsonSerializer.Serialize(new ReservationRemovedEvent
         {
-            GetReservationByIdQuery = request.Id,
-            Email = ReservationService.Email
+            ReservationId = request.Id,
+            Email = reservation.Email
         });
         var body = Encoding.UTF8.GetBytes(json);
-        channel.BasicPublishAsync(
+        await channel.BasicPublishAsync(
             exchange: "",
             routingKey: "reservation-removed",
-            basicProperties: null,
+            // basicProperties: null,
             body: body
         );
 
