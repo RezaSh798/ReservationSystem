@@ -2,11 +2,11 @@ using System.Text;
 using System.Text.Json;
 using MediatR;
 using RabbitMQ.Client;
-using Reservation.Application.Commands;
-using Reservation.Domain.Entities;
-using Reservation.Infrastructure.Persistence;
+using ReservationService.Application.Commands;
+using ReservationService.Domain.Entities;
+using ReservationService.Infrastructure.Persistence;
 
-namespace Reservation.Application.Handlers.Commands;
+namespace ReservationService.Application.Handlers.Commands;
 
 public class CreateReservationCommandHandler(ReservationDbContext context) : IRequestHandler<CreateReservationCommand, ReservationEntity>
 {
@@ -34,10 +34,10 @@ public class CreateReservationCommandHandler(ReservationDbContext context) : IRe
 
         var json = JsonSerializer.Serialize(new ReservationCreateEvent
         {
-            ReservationId = reservation.Id,
-            Name = reservation.Name,
-            Email = reservation.Email,
-            ReservationDate = reservation.ReservationDate
+            ReservationId = ReservationService.Id,
+            Name = ReservationService.Name,
+            Email = ReservationService.Email,
+            ReservationDate = ReservationService.ReservationDate
         });
 
         var body = Encoding.UTF8.GetBytes(json);

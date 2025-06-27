@@ -1,7 +1,7 @@
 using MediatR;
-using Reservation.Domain.Entities;
+using ReservationService.Domain.Entities;
 
-namespace Reservation.Application.Commands;
+namespace ReservationService.Application.Commands;
 
 public class CreateReservationCommand : IRequest<ReservationEntity>
 {

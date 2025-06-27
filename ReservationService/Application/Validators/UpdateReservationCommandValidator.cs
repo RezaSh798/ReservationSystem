@@ -1,7 +1,7 @@
 using FluentValidation;
-using Reservation.Application.Commands;
+using ReservationService.Application.Commands;
 
-namespace Reservation.Application.Validators;
+namespace ReservationService.Application.Validators;
 
 public class UpdateReservationCommandValidator : AbstractValidator<UpdateReservationCommand>
 {

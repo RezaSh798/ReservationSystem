@@ -1,7 +1,7 @@
 using MediatR;
-using Reservation.Domain.Entities;
+using ReservationService.Domain.Entities;
 
-namespace Reservation.Application.Queries;
+namespace ReservationService.Application.Queries;
 
 public class GetReservationByIdQuery : IRequest<ReservationEntity>
 {

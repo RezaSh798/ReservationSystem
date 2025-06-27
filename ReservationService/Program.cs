@@ -1,7 +1,7 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using Reservation.Infrastructure.Messaging;
-using Reservation.Infrastructure.Persistence;
+using ReservationService.Infrastructure.Messaging;
+using ReservationService.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 

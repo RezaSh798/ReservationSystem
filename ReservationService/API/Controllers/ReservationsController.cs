@@ -1,11 +1,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Reservation.Application.Commands;
-using Reservation.Application.Queries;
-using Reservation.Domain.Entities;
+using ReservationService.Application.Commands;
+using ReservationService.Application.Queries;
+using ReservationService.Domain.Entities;
 
-namespace Reservation.API.Controllers;
+namespace ReservationService.API.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]

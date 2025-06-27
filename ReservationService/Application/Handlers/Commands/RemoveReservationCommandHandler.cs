@@ -2,11 +2,11 @@ using System.Text;
 using System.Text.Json;
 using MediatR;
 using RabbitMQ.Client;
-using Reservation.Application.Commands;
-using Reservation.Domain.Entities;
-using Reservation.Infrastructure.Persistence;
+using ReservationService.Application.Commands;
+using ReservationService.Domain.Entities;
+using ReservationService.Infrastructure.Persistence;
 
-namespace Reservation.Application.Handlers.Commands;
+namespace ReservationService.Application.Handlers.Commands;
 
 public class RemoveReservationCommandHandler
     (ReservationDbContext context)
@@ -37,7 +37,7 @@ public class RemoveReservationCommandHandler
         var json = JsonSerializer.Serialize(new ReservationRemovedEvent
         {
             GetReservationByIdQuery = request.Id,
-            Email = reservation.Email
+            Email = ReservationService.Email
         });
         var body = Encoding.UTF8.GetBytes(json);
         channel.BasicPublishAsync(

@@ -1,7 +1,7 @@
 using MediatR;
-using Reservation.Application.Commands;
-using Reservation.Domain.Entities;
-using Reservation.Infrastructure.Persistence;
+using ReservationService.Application.Commands;
+using ReservationService.Domain.Entities;
+using ReservationService.Infrastructure.Persistence;
 
 public class UpdateReservationCommandHandler
     (ReservationDbContext context)

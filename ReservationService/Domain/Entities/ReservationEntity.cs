@@ -1,4 +1,4 @@
-namespace Reservation.Domain.Entities;
+namespace ReservationService.Domain.Entities;
 
 public class ReservationEntity
 {

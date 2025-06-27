@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Reservation.Domain.Entities;
+using ReservationService.Domain.Entities;
 
-namespace Reservation.Infrastructure.Persistence;
+namespace ReservationService.Infrastructure.Persistence;
 
 public class ReservationDbContext : DbContext
 {

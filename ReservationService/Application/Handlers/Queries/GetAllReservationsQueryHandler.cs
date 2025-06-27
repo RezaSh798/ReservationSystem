@@ -1,10 +1,10 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Reservation.Application.Queries;
-using Reservation.Domain.Entities;
-using Reservation.Infrastructure.Persistence;
+using ReservationService.Application.Queries;
+using ReservationService.Domain.Entities;
+using ReservationService.Infrastructure.Persistence;
 
-namespace Reservation.Application.Handlers.Queries;
+namespace ReservationService.Application.Handlers.Queries;
 
 public class GetAllReservationsQueryHandler
     (ReservationDbContext context)
