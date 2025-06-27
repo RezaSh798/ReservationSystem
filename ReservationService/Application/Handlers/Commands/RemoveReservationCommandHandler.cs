@@ -30,7 +30,7 @@ public class RemoveReservationCommandHandler
 
         await channel.QueueDeclareAsync(
             queue: "reservation-removed",
-            durable: false,
+            durable: true,
             exclusive: false,
             autoDelete: false,
             arguments: null

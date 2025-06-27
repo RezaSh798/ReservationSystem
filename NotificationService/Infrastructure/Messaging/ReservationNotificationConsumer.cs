@@ -32,6 +32,7 @@ public class ReservationNotificationConsumer
                 await SendConfirmEmailAsync(message);
             else
                 await SendCancellationEmailAsync(message);
+
         };
 
         await _channel.BasicConsumeAsync(queue: "reservation-created", autoAck: true, consumer: consumer);
@@ -42,7 +43,7 @@ public class ReservationNotificationConsumer
 
     private async Task SendConfirmEmailAsync(string message)
     {
-        var evt = JsonSerializer.Deserialize<ReservationCreatedEvent>(message);
+        ReservationCreatedEvent? evt = JsonSerializer.Deserialize<ReservationCreatedEvent>(message);
 
         var subject = "Reservation Confirmed";
         var html = $"<p>رزرو شما با شماره {evt.ReservationId} با موفقیت ثبت شد.</p>";
@@ -62,7 +63,7 @@ public class ReservationNotificationConsumer
 
     private async Task SendCancellationEmailAsync(string message)
     {
-        var evt = JsonSerializer.Deserialize<ReservationRemovedEvent>(message);
+        ReservationRemovedEvent? evt = JsonSerializer.Deserialize<ReservationRemovedEvent>(message);
 
         var subject = "Reservation Canceled";
         var html = $"<p>رزرو شما با شماره {evt.ReservationId} لغو شد.</p>";
@@ -91,14 +92,14 @@ public class ReservationNotificationConsumer
     {
         var factory = new ConnectionFactory
         {
-            HostName = _configuration["RabbitMQ:HostName"],
-            UserName = _configuration["RabbitMQ:UserName"],
-            Password = _configuration["RabbitMQ:Password"]
+            HostName = _configuration["RabbitMQ:HostName"] ?? "localhost",
+            UserName = _configuration["RabbitMQ:UserName"] ?? "guest",
+            Password = _configuration["RabbitMQ:Password"] ?? "guest"
         };
         _connection = await factory.CreateConnectionAsync();
         _channel = await _connection.CreateChannelAsync();
 
-        await _channel.QueueDeclareAsync(queue: "reservation-created", durable: false, exclusive: false, autoDelete: false, arguments: null);
-        await _channel.QueueDeclareAsync(queue: "reservation-removed", durable: false, exclusive: false, autoDelete: false, arguments: null);
+        await _channel.QueueDeclareAsync(queue: "reservation-created", durable: true, exclusive: false, autoDelete: false, arguments: null);
+        await _channel.QueueDeclareAsync(queue: "reservation-removed", durable: true, exclusive: false, autoDelete: false, arguments: null);
     }
 }

@@ -27,7 +27,7 @@ public class CreateReservationCommandHandler(ReservationDbContext context) : IRe
         using var channel = await connection.CreateChannelAsync();
         await channel.QueueDeclareAsync(
             queue: "reservation-created",
-            durable: false,
+            durable: true,
             exclusive: false,
             autoDelete: false,
             arguments: null

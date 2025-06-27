@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # reservation-service:
+  #   build:
+  #     context: .
+  #     dockerfile: ReservationService/Dockerfile
+  #   ports:
+  #     - "3000:80"
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ConnectionStrings__Default=Server=sql-server;Database=ReservationDb;User=sa;Password=MySrtongP@ssword123;
+  #   depends_on:
+  #     - sql-server
+  #   networks:
+  #     - app-network
+
+  # notification-service:
+  #   build:
+  #     context: .
+  #     dockerfile: NotificationService/Dockerfile
+  #   ports:
+  #     - "4000:80"
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ConnectionStrings__Default=Server=sql-server;Database=NotificationDb;User=sa;Password=MySrtongP@ssword123;
+  #   depends_on:
+  #     - sql-server
+  #   networks:
+  #     - app-network
+
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=MySrtongP@ssword123
+    ports:
+      - "1433:1433"
+    networks:
+      - app-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+networks:
+  app-network:
+    driver: bridge
