@@ -9,7 +9,7 @@ namespace NotificationService.API.Controllers;
 [Route("api/v1/[controller]")]
 public class NotificationsController(NotificationDbContext context) : ControllerBase
 {
-    private readonly NotificationDbContext _context;
+    private readonly NotificationDbContext _context = context;
 
     [HttpGet]
     public async Task<ActionResult<List<NotificationEntity>>> GetAll()

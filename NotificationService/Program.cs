@@ -7,7 +7,6 @@ using Notification.Infrastructure.Messaging;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var app = builder.Build();
 builder.Services.AddDbContext<NotificationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("NotificationDatabase")));
 
@@ -21,6 +20,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers();
+
+var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();

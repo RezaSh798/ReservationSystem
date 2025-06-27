@@ -35,7 +35,7 @@ public class ReservationNotificationConsumer
         };
 
         await _channel.BasicConsumeAsync(queue: "reservation-created", autoAck: true, consumer: consumer);
-        await _channel.BasicConsumeAsync(queue: "reservation-deleted", autoAck: true, consumer: consumer);
+        await _channel.BasicConsumeAsync(queue: "reservation-removed", autoAck: true, consumer: consumer);
 
         return;
     }
