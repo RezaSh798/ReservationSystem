@@ -52,17 +52,10 @@ ReservationSolution/
 
 Before starting, ensure Docker is installed and running.
 
-### 🔄 Start SQL Server
 ```bash
-docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=YourStrong@Password" \
--p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
+docker compose up
 ```
 
-### 🐇 Start RabbitMQ
-```bash
-docker run -d --hostname my-rabbit --name rabbitmq \
--p 5672:5672 -p 15672:15672 rabbitmq:3-management
-```
 RabbitMQ UI: [http://localhost:15672](http://localhost:15672)  
 Login: `guest` / `guest`
 
