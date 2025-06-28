@@ -10,10 +10,11 @@ using Reservation.Contracts.Events;
 namespace ReservationService.Application.Handlers.Commands;
 
 public class RemoveReservationCommandHandler
-    (ReservationDbContext context)
+    (ReservationDbContext context, ILogger<RemoveReservationCommandHandler> logger)
     : IRequestHandler<RemoveReservationCommand, Guid>
 {
     private readonly ReservationDbContext _context = context;
+    private readonly ILogger<RemoveReservationCommandHandler> _logger = logger;
 
     public async Task<Guid> Handle(RemoveReservationCommand request, CancellationToken cancellationToken)
     {
@@ -48,6 +49,7 @@ public class RemoveReservationCommandHandler
             body: body
         );
 
+        _logger.LogInformation($"Reservation with id {reservation.Id} was removed ;)");
         return request.Id;
     }
 }

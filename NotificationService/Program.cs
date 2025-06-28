@@ -3,7 +3,6 @@ using NotificationService.Infrastructure.Messaging;
 using Notification.Infrastructure.Persistence;
 using NotificationService.Infrastructure.Services;
 using NotificationService.Application.Services;
-using Notification.Infrastructure.Messaging;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -7,10 +7,10 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Reservation.Contracts.Events;
 
-namespace Notification.Infrastructure.Messaging;
+namespace NotificationService.Infrastructure.Messaging;
 
 public class ReservationNotificationConsumer
-    (IEmailService emailService, IServiceProvider serviceProvider, IConfiguration configuration)
+    (IEmailService emailService, IServiceProvider serviceProvider, IConfiguration configuration, ILogger<ReservationNotificationConsumer> logger)
     : BackgroundService
 {
     private IConnection _connection;
@@ -18,10 +18,12 @@ public class ReservationNotificationConsumer
     private readonly IEmailService _emailService = emailService;
     private readonly IServiceProvider _serviceProvider = serviceProvider;
     private readonly IConfiguration _configuration = configuration;
+    private readonly ILogger _logger = logger;
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         await InitChannel();
+
         var consumer = new AsyncEventingBasicConsumer(_channel);
         consumer.ReceivedAsync += async (model, eventArgs) =>
         {
@@ -44,6 +46,7 @@ public class ReservationNotificationConsumer
     private async Task SendConfirmEmailAsync(string message)
     {
         ReservationCreatedEvent? evt = JsonSerializer.Deserialize<ReservationCreatedEvent>(message);
+        _logger.LogInformation($"Reservation created with id {evt?.ReservationId} was received :)");
 
         var subject = "Reservation Confirmed";
         var html = $"<p>رزرو شما با شماره {evt.ReservationId} با موفقیت ثبت شد.</p>";
@@ -64,6 +67,7 @@ public class ReservationNotificationConsumer
     private async Task SendCancellationEmailAsync(string message)
     {
         ReservationRemovedEvent? evt = JsonSerializer.Deserialize<ReservationRemovedEvent>(message);
+        _logger.LogInformation($"Reservation removed with id {evt?.ReservationId} was received :)");
 
         var subject = "Reservation Canceled";
         var html = $"<p>رزرو شما با شماره {evt.ReservationId} لغو شد.</p>";

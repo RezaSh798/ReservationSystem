@@ -9,9 +9,12 @@ using Reservation.Contracts.Events;
 
 namespace ReservationService.Application.Handlers.Commands;
 
-public class CreateReservationCommandHandler(ReservationDbContext context) : IRequestHandler<CreateReservationCommand, ReservationEntity>
+public class CreateReservationCommandHandler
+    (ReservationDbContext context, ILogger<CreateReservationCommandHandler> logger)
+    : IRequestHandler<CreateReservationCommand, ReservationEntity>
 {
     private readonly ReservationDbContext _context = context;
+    private readonly ILogger<CreateReservationCommandHandler> _logger = logger;
 
     public async Task<ReservationEntity> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
     {
@@ -50,6 +53,7 @@ public class CreateReservationCommandHandler(ReservationDbContext context) : IRe
             body: body
         );
 
+        _logger.LogInformation($"Reservation with id {reservation.Id} was created ;)");
         return reservation;
     }
 }
