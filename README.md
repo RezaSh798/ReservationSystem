@@ -6,7 +6,7 @@ An event-driven microservices-based system built with ASP.NET Core Web API that 
 
 ## 🧰 Tech Stack
 
-- ✅ ASP.NET Core Web API (.NET 7 / .NET 8)
+- ✅ ASP.NET Core Web API (.NET 9)
 - 📬 RabbitMQ (event messaging)
 - 📧 SMTP with MailKit for email notifications
 - 🛢️ SQL Server via Entity Framework Core
