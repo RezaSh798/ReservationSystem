@@ -35,10 +35,11 @@ public class ReservationNotificationConsumer
             else
                 await SendCancellationEmailAsync(message);
 
+            await _channel.BasicAckAsync(eventArgs.DeliveryTag, multiple: false, eventArgs.CancellationToken);
         };
 
-        await _channel.BasicConsumeAsync(queue: "reservation-created", autoAck: true, consumer: consumer);
-        await _channel.BasicConsumeAsync(queue: "reservation-removed", autoAck: true, consumer: consumer);
+        await _channel.BasicConsumeAsync(queue: "reservation-created", autoAck: false, consumer: consumer);
+        await _channel.BasicConsumeAsync(queue: "reservation-removed", autoAck: false, consumer: consumer);
 
         return;
     }
@@ -105,5 +106,6 @@ public class ReservationNotificationConsumer
 
         await _channel.QueueDeclareAsync(queue: "reservation-created", durable: true, exclusive: false, autoDelete: false, arguments: null);
         await _channel.QueueDeclareAsync(queue: "reservation-removed", durable: true, exclusive: false, autoDelete: false, arguments: null);
+        await _channel.BasicQosAsync(prefetchSize: 0, prefetchCount: 1, global: false);
     }
 }

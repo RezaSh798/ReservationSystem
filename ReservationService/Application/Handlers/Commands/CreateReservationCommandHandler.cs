@@ -36,6 +36,8 @@ public class CreateReservationCommandHandler
             arguments: null
         );
 
+        await channel.BasicQosAsync(prefetchSize: 0, prefetchCount: 1, global: false);
+
         var json = JsonSerializer.Serialize(new ReservationCreatedEvent
         {
             ReservationId = reservation.Id,
@@ -49,7 +51,8 @@ public class CreateReservationCommandHandler
         await channel.BasicPublishAsync(
             exchange: "",
             routingKey: "reservation-created",
-            // basicProperties: null,
+            mandatory: true,
+            basicProperties: new BasicProperties { Persistent = true },
             body: body
         );
 

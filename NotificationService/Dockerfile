@@ -3,6 +3,7 @@ WORKDIR /app
 
 COPY ../NotificationService ./NotificationService/
 COPY ../Reservation.Contracts ./Reservation.Contracts/
+WORKDIR /app/NotificationService
 RUN dotnet restore
 
 RUN dotnet publish -c Release -o /app/publish

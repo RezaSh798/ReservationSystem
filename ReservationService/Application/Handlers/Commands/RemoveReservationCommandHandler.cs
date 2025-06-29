@@ -36,6 +36,8 @@ public class RemoveReservationCommandHandler
             autoDelete: false,
             arguments: null
         );
+        await channel.BasicQosAsync(prefetchSize: 0, prefetchCount: 1, global: false);
+
         var json = JsonSerializer.Serialize(new ReservationRemovedEvent
         {
             ReservationId = request.Id,
@@ -45,7 +47,8 @@ public class RemoveReservationCommandHandler
         await channel.BasicPublishAsync(
             exchange: "",
             routingKey: "reservation-removed",
-            // basicProperties: null,
+            mandatory: true,
+            basicProperties: new BasicProperties { Persistent = true },
             body: body
         );
 
